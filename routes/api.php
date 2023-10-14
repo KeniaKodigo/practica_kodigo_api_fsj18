@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CoachController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//rutas del coach
+Route::get('/getCoaches', [CoachController::class, 'index']);
+Route::post('/registrarCoach', [CoachController::class, 'store']);
+Route::get('/getCoach/{id}', [CoachController::class, 'getCoachById']);
+Route::put('/actualizarCoach/{id}', [CoachController::class, 'update']);
+Route::put('/deshabilitarCoach/{id}', [CoachController::class, 'deshabilitar']);
