@@ -31,7 +31,7 @@ class CoachController extends Controller
             "telefono" => $request->input('telefono'),
             "correo" => $request->input('correo'),
             "password" => $request->input('password'),
-            "id_materia" => $request->input('id_materia'),
+            "id_materia" => $request->input('id_materia')
         );
 
         if(!empty($datos)){
@@ -61,12 +61,13 @@ class CoachController extends Controller
     //obtener un coach por su Id
     public function getCoachById($id){
         //
-        $coach = Coach::select('*')->where('id','=',$id)->get();
+        //$coach = Coach::select('*')->where('id','=',$id)->get(); []
+        $coach = Coach::find($id); //{}
 
-        if(count($coach) == 0){
+        if(empty($coach)){
             return response()->json(["status" => 404, "detalle" => "No se encontraron resultados"]);
         }else{
-            return response()->json(["status" => 200, "detalle" => $coach]);
+            return response()->json($coach);
         }
     }
 
