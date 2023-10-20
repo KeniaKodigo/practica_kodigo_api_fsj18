@@ -25,3 +25,7 @@ Route::post('/registrarCoach', [CoachController::class, 'store']);
 Route::get('/getCoach/{id}', [CoachController::class, 'getCoachById']);
 Route::put('/actualizarCoach/{id}', [CoachController::class, 'update']);
 Route::put('/deshabilitarCoach/{id}', [CoachController::class, 'deshabilitar']);
+
+#seccion para bootcamps por coach
+Route::get('/bootcamps', [CoachController::class, 'obtenerBootcamps']);
+Route::post('/asignacionBootcamps/{id_coach}', [CoachController::class, 'asignarBootcampsByCoach']);

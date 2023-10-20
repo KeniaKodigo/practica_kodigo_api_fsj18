@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bootcamp;
 use App\Models\Coach;
+use App\Models\Detalle_Bootcamp_Coach;
 use Illuminate\Http\Request;
 
 class CoachController extends Controller
 {
     public function index(){
         //select * from table => all()
-        $coaches = Coach::all();
+        /**
+         * validar que solo estan coaches con estado 1 (activos)
+         * seleccionar el nombre de la materia
+         */
+        //$coaches = Coach::all();
+        $coaches = Coach::join('materia','coach.id_materia','=','materia.id')->where('coach.id_estado','=',1)->select('coach.*','materia.nombre AS materia')->get();
         //json
 
         /**
@@ -103,4 +110,32 @@ class CoachController extends Controller
 
         return response()->json(["status" => 200, "detalle" => "El coach esta inactivo"]);
     }
+
+
+    #metodo para obtener todos los bootcamps
+    public function obtenerBootcamps(){
+        //select * from bootcamp => all()
+        $bootcamps = Bootcamp::all();
+
+        return response()->json($bootcamps);
+    }
+
+    #metodo para registrar bootcamps y su coach
+    public function asignarBootcampsByCoach(Request $request, $id_coach){
+        $bootcamps = $request->input('bootcamps'); //[]
+
+        //iteramos el arreglo de bootcamps
+        for($i = 0; $i < count($bootcamps); $i++){
+            //guardamos la informacion a la tabla de bd
+            $detalle = new Detalle_Bootcamp_Coach();
+            $detalle->id_bootcamp = $bootcamps[$i];
+            $detalle->id_coach = $id_coach;
+            $detalle->save();
+        }
+
+        return response()->json(["status" => 200, "detalle" => "La peticion ha sido un exito"]);
+    }
+
+
+
 }
