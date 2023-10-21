@@ -137,5 +137,20 @@ class CoachController extends Controller
     }
 
 
+    #metodo para obtener los bootcamps por coach
+    public function obtenerBootcampsByCoach(Request $request){
+        /**
+         * SELECT coach.nombre, bootcamp.bootcamp FROM coach INNER JOIN detalle_bootcamp_coach ON coach.id = detalle_bootcamp_coach.id_coach INNER JOIN bootcamp ON bootcamp.id = detalle_bootcamp_coach.id_bootcamp WHERE detalle_bootcamp_coach.id_coach = 1
+         */
+
+        $id = $request->input('id_coach');
+
+        $detalle = Coach::join('detalle_bootcamp_coach','coach.id','=','detalle_bootcamp_coach.id_coach')->join('bootcamp','bootcamp.id','=','detalle_bootcamp_coach.id_bootcamp')->where('detalle_bootcamp_coach.id_coach','=',$id)->select('coach.nombre','bootcamp.bootcamp')->get();
+
+        return response()->json($detalle);
+
+    }
+
+
 
 }

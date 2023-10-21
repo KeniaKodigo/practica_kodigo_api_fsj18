@@ -29,3 +29,5 @@ Route::put('/deshabilitarCoach/{id}', [CoachController::class, 'deshabilitar']);
 #seccion para bootcamps por coach
 Route::get('/bootcamps', [CoachController::class, 'obtenerBootcamps']);
 Route::post('/asignacionBootcamps/{id_coach}', [CoachController::class, 'asignarBootcampsByCoach']);
+
+Route::post('/listaBootcampsCoach', [CoachController::class, 'obtenerBootcampsByCoach']);
